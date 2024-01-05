@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: sam-csrf-protection-example
+
+Globals:
+  Function:
+    Timeout: 3
+    Runtime: nodejs20.x
+    Handler: app.lambdaHandler
+    Environment:
+      Variables:
+        STACK_NAME: !Ref AWS::StackName
+        ENCRYPTION_KEY_BASE: "your_secret_key"
+        CSRF_TOKEN_SECRET: "some phrase"
+
+Resources:
+  WebpageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: webpage/
+      Events:
+        WebpageApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+
+  SubmissionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: submission/
+      Events:
+        SubmissionApi:
+          Type: Api
+          Properties:
+            Path: /submit
+            Method: post
+
+Outputs:
+  WebPage:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

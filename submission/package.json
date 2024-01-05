@@ -1,0 +1,16 @@
+{
+  "name": "submission",
+  "version": "1.0.0",
+  "description": "submission function",
+  "type": "module",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "c8 mocha tests/unit/"
+  },
+  "devDependencies": {
+    "c8": "^9.0.0",
+    "chai": "^5.0.0",
+    "mocha": "^10.2.0"
+  }
+}
